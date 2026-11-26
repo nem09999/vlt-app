@@ -1,0 +1,14 @@
+name: One-time free standard macOS source test
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  source-test:
+    if: github.repository == 'nem09999/vlt-app' && github.event.repository.private == false
+    runs-on: macos-15
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - name: Check official public source without publishing
+        run: node scripts/collect-online.cjs

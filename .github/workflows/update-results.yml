@@ -26,16 +26,22 @@ jobs:
         run: |
           node -e "(async()=>{for(const u of ['https://media.vietlott.vn/main/11.2026/system/game.pdf.result/01593_mega_a5_01593.pdf','https://media.vietlott.vn/main/11.2026/system/game.pdf.result/01428_power_a5_01428.pdf']){try{const r=await fetch(u,{signal:AbortSignal.timeout(15000)});console.log('OFFICIAL_PDF',r.status,r.headers.get('content-type'));}catch(e){console.log('OFFICIAL_PDF_ERROR',e.message);}}})();"
       - name: Read and validate official results
+        id: collect
+        continue-on-error: true
         run: node scripts/collect-online.cjs
       - name: Commit only validated snapshot changes
         shell: bash
         run: |
-          if [ -z "$(git status --porcelain -- docs/latest.json docs/snapshots docs/receipts)" ]; then
+          if [ -z "$(git status --porcelain -- docs/latest.json docs/snapshots docs/receipts docs/source-status.json)" ]; then
             echo 'No new verified results'
             exit 0
           fi
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add docs/latest.json docs/snapshots docs/receipts
+          git add docs/latest.json docs/snapshots docs/source-status.json
+          if [ -d docs/receipts ]; then git add docs/receipts; fi
           git commit -m 'data: update verified Vietlott results'
           git push
+      - name: Report source failure without changing latest snapshot
+        if: steps.collect.outcome == 'failure'
+        run: exit 1

@@ -9,7 +9,8 @@ async function syncOnline(manual=false){
   active={data,source_name:'Snapshot GitHub đã kiểm tra hash '+m.sha256.slice(0,12),trust:'BUNDLED_OFFICIAL_DELTA'};
   if(parsed.diff.added>0){last=null;el('result-panel').style.display='none';}
   save(STORE,{data,source_name:'Bản cache từ snapshot GitHub '+m.updated_at});updateCards();text('data-trust','Snapshot GitHub · đã kiểm tra hash');text('asof',new Date(m.updated_at).toLocaleString('vi-VN',{timeZone:'Asia/Ho_Chi_Minh',hour12:false}));
-  text('online-status','Đã kiểm tra: Mega đến '+data.mega.at(-1).date+'; Power đến '+data.power.at(-1).date+'. '+(parsed.diff.added?'Đã thêm '+parsed.diff.added+' kỳ.':'Không có kỳ mới.'));
+  const summary='Snapshot: Mega đến '+data.mega.at(-1).date+'; Power đến '+data.power.at(-1).date+'. '+(parsed.diff.added?'Đã thêm '+parsed.diff.added+' kỳ.':'Không có snapshot mới hơn.');text('online-status',summary);
+  try{const ss=await fetch(RAW+'source-status.json',{cache:'no-store',credentials:'omit',signal:AbortSignal.timeout(10000)});if(ss.ok){const state=await ss.json();if(state.schema==='vlt-source-status-v1'&&state.status==='SOURCE_FAILED_KEEP_PREVIOUS')text('online-status',summary+' Lượt thu thập gần nhất thất bại ('+String(state.error_code||'SOURCE_ERROR')+'); dữ liệu nguồn mới hơn chưa được xác nhận.');else if(state.schema==='vlt-source-status-v1')text('online-status',summary+' Lần xác minh nguồn gần nhất: '+String(state.checked_at||''));}}catch{}
  }catch(e){text('online-status','Giữ dữ liệu hiện có. Chưa tải được snapshot mới: '+e.message+'. Khi offline, dữ liệu chỉ mới đến cutoff ghi trên thẻ.');}finally{syncing=false;}
 }
 if('serviceWorker'in navigator&&location.protocol==='https:')navigator.serviceWorker.register('./sw.js').catch(()=>{});
