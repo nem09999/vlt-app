@@ -3,8 +3,9 @@
 const fs=require('fs'),path=require('path'),crypto=require('crypto'),D=require('../lib/data.cjs');
 const ORIGIN='https://vietlott.vn',specs={mega:{code:'645'},power:{code:'655'}};
 const hash=x=>crypto.createHash('sha256').update(x).digest('hex');
-async function collect(current,request=fetch,record=()=>{}){
- const original=D.validate(current),next=JSON.parse(JSON.stringify(original)),evidence=[];
+async function collect(current,request=fetch,record=()=>{},reverify=[]){
+ const original=D.validate(current),next=JSON.parse(JSON.stringify(original)),evidence=[],verified_records=[];
+ if(!Array.isArray(reverify)||reverify.some(r=>!specs[r.game]||!/^\d{5}$/.test(r.id)||!original[r.game].some(x=>x.id===r.id&&x.date===r.date)))throw Error('Danh sách chờ đối chiếu không hợp lệ');
  async function get(url,options={}){
   const res=await request(url,{...options,redirect:'error',signal:AbortSignal.timeout(20000)});
   if(!res.ok)throw Error('Vietlott HTTP '+res.status+' tại '+url);
@@ -20,23 +21,27 @@ async function collect(current,request=fetch,record=()=>{}){
   const last=original[game].at(-1),delta=+latest.id-+last.id;
   if(delta<0)throw Error('Nguồn đang trả kỳ cũ hơn snapshot: '+game);
   if(delta>120)throw Error('Thiếu trên 120 kỳ '+game+'; cần đối soát backfill riêng');
-  if(delta===0){if(last.date!==latest.date||last.result.join(',')!==latest.result.join(','))throw Error('Xung đột kỳ cuối '+game+' #'+last.id);continue;}
-  const key=html.match(/ServerSideDrawResult\(ORenderInfo,'([^']+)'/);if(!key)throw Error('Vietlott đổi cấu trúc điều hướng');
-  if(!info)info=await post('/ajaxpro/Vietlott.Utility.WebEnvironments,Vietlott.Utility.ashx','ServerSideFrontEndCreateRenderInfo',{SiteId:'main.frontend.vi'});
+  const pending=reverify.filter(r=>r.game===game),start=Math.min(+last.id,...pending.map(r=>+r.id));
+  if(+latest.id-start>120)throw Error('Cần đối chiếu riêng trên 120 kỳ chờ xác minh');
+  if(delta===0&&pending.length===0){if(last.date!==latest.date||last.result.join(',')!==latest.result.join(','))throw Error('Xung đột kỳ cuối '+game+' #'+last.id);verified_records.push({game,id:last.id,date:last.date});continue;}
+  const key=html.match(/ServerSideDrawResult\(ORenderInfo,'([^']+)'/);
+  if(start<+latest.id){if(!key)throw Error('Vietlott đổi cấu trúc điều hướng');if(!info)info=await post('/ajaxpro/Vietlott.Utility.WebEnvironments,Vietlott.Utility.ashx','ServerSideFrontEndCreateRenderInfo',{SiteId:'main.frontend.vi'});}
   // Recheck the overlap tail as well as every new ID; never infer numbers or dates.
-  for(let id=+last.id;id<=+latest.id;id++){
+  for(let id=start;id<=+latest.id;id++){
    const ident=String(id).padStart(5,'0');let r;
    if(id===+latest.id)r=latest;else{
     const o=await post('/ajaxpro/Vietlott.PlugIn.WebParts.Game'+specs[game].code+'ResultDetailWebPart,Vietlott.PlugIn.WebParts.ashx','ServerSideDrawResult',{ORenderInfo:info,Key:key[1],DrawId:ident});r=D.parseOfficialHTML(String(o.RetExtraParam1||''),game);
    }
    if(r.id!==ident)throw Error('Vietlott trả nhầm mã kỳ yêu cầu '+ident);
-   if(id===+last.id){if(r.date!==last.date||r.result.join(',')!==last.result.join(','))throw Error('Xung đột kỳ nối '+game+' #'+ident);}else next[game].push(D.row(game,r));
+   const previous=original[game].find(x=>x.id===ident);
+   if(previous){if(r.date!==previous.date||r.result.join(',')!==previous.result.join(','))throw Error('Xung đột kỳ nối '+game+' #'+ident);}else next[game].push(D.row(game,r));
+   verified_records.push({game,id:r.id,date:r.date});
   }
  }
  const validated=D.validate(next),diff=D.compare(original,validated);
  const today=new Date(Date.now()+7*3600000).toISOString().slice(0,10);
  for(const g of Object.keys(specs))if(validated[g].at(-1).date>today)throw Error('Nguồn có kết quả tương lai');
- return {data:validated,diff,evidence};
+ return {data:validated,diff,evidence,verified_records};
 }
 
 module.exports={collect};
