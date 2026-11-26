@@ -32,14 +32,18 @@ jobs:
       - name: Commit only validated snapshot changes
         shell: bash
         run: |
-          if [ -z "$(git status --porcelain -- docs/latest.json docs/snapshots docs/receipts docs/source-status.json)" ]; then
-            echo 'No new verified results'
-            exit 0
-          fi
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add docs/latest.json docs/snapshots docs/source-status.json
-          if [ -d docs/receipts ]; then git add docs/receipts; fi
+          if [ "${{ steps.collect.outcome }}" = 'success' ]; then
+            git add docs/latest.json docs/snapshots docs/source-status.json
+            if [ -d docs/receipts ]; then git add docs/receipts; fi
+          else
+            if [ -f docs/source-status.json ]; then git add docs/source-status.json; fi
+          fi
+          if git diff --cached --quiet; then
+            echo 'No publishable change'
+            exit 0
+          fi
           git commit -m 'data: update verified Vietlott results'
           git push
       - name: Report source failure without changing latest snapshot
