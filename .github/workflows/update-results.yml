@@ -22,6 +22,9 @@ jobs:
     timeout-minutes: 8
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - name: Check official static result channel
+        run: |
+          node -e "(async()=>{for(const u of ['https://media.vietlott.vn/main/11.2026/system/game.pdf.result/01593_mega_a5_01593.pdf','https://media.vietlott.vn/main/11.2026/system/game.pdf.result/01428_power_a5_01428.pdf']){try{const r=await fetch(u,{signal:AbortSignal.timeout(15000)});console.log('OFFICIAL_PDF',r.status,r.headers.get('content-type'));}catch(e){console.log('OFFICIAL_PDF_ERROR',e.message);}}})();"
       - name: Read and validate official results
         run: node scripts/collect-online.cjs
       - name: Commit only validated snapshot changes
