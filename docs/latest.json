@@ -1,0 +1,10 @@
+{
+  "schema": "vlt-manifest-v1",
+  "snapshot": "snapshots/01c6f2c95e5a7490a2d98c631f16307f2fae753e68dc105fd0771b3246f33e26.json",
+  "sha256": "01c6f2c95e5a7490a2d98c631f16307f2fae753e68dc105fd0771b3246f33e26",
+  "updated_at": "2026-11-26T10:17:05.344899+00:00",
+  "cutoffs": {
+    "mega": "2026-11-25",
+    "power": "2026-11-24"
+  }
+}
