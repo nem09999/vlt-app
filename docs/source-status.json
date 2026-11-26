@@ -1,6 +1,6 @@
 {
   "schema": "vlt-source-status-v1",
-  "checked_at": "2026-11-26T11:13:53.898Z",
+  "checked_at": "2026-11-26T11:14:18.863Z",
   "status": "SOURCE_FAILED_KEEP_PREVIOUS",
   "error_code": "HTTP_403"
 }
