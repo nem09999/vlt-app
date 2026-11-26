@@ -1,6 +1,7 @@
 {
   "schema": "vlt-source-status-v1",
-  "checked_at": "2026-11-26T11:14:18.863Z",
-  "status": "SOURCE_FAILED_KEEP_PREVIOUS",
-  "error_code": "HTTP_403"
+  "checked_at": "2026-11-26T16:02:50.970Z",
+  "status": "UPDATED",
+  "snapshot_sha256": "0f4c02d95ef0eca954eea14c2439a070ff138218cde77c4948cbc11ae6133935",
+  "added": 1
 }

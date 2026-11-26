@@ -1,0 +1,40 @@
+{
+  "schema": "vlt-source-receipt-v1",
+  "updated_at": "2026-11-26T16:02:50.962Z",
+  "previous_sha256": "01c6f2c95e5a7490a2d98c631f16307f2fae753e68dc105fd0771b3246f33e26",
+  "snapshot_sha256": "0f4c02d95ef0eca954eea14c2439a070ff138218cde77c4948cbc11ae6133935",
+  "added": 1,
+  "evidence": [
+    {
+      "url": "https://vietlott.vn/vi/trung-thuong/ket-qua-trung-thuong/645",
+      "method": "GET",
+      "collected_at": "2026-11-26T16:02:49.974Z",
+      "sha256": "930464ff25dae8ad3e4a9466365758ac31ea94cff43da7a64fdaf517607e0381",
+      "bytes": 39727
+    },
+    {
+      "url": "https://vietlott.vn/vi/trung-thuong/ket-qua-trung-thuong/655",
+      "method": "GET",
+      "collected_at": "2026-11-26T16:02:50.430Z",
+      "sha256": "9474ed63eed69a9dcde97138c355b0c70139d3865e9fa125c11b6c8ce93c7232",
+      "bytes": 42456
+    },
+    {
+      "url": "https://vietlott.vn/ajaxpro/Vietlott.Utility.WebEnvironments,Vietlott.Utility.ashx",
+      "method": "POST",
+      "collected_at": "2026-11-26T16:02:50.539Z",
+      "sha256": "eb91fa6e4cbb9355d418a4ccd15607f8159d6ee2528f914f040d1b7ed272aa35",
+      "bytes": 301,
+      "request_body_sha256": "c05e06373b6d58c7fb45742f9d4add0063cb2325afb07f2b6a38b0ca6afde7bc"
+    },
+    {
+      "url": "https://vietlott.vn/ajaxpro/Vietlott.PlugIn.WebParts.Game655ResultDetailWebPart,Vietlott.PlugIn.WebParts.ashx",
+      "method": "POST",
+      "collected_at": "2026-11-26T16:02:50.945Z",
+      "sha256": "50c25270e06c759c2891800e68bb6726b91ec05a1116acab9698dbd46d507165",
+      "bytes": 10422,
+      "request_body_sha256": "e754769d397018fac1b06a1df20e5c690e9701158a8e566ca1fb30ff602ea1ad"
+    }
+  ],
+  "official_issuance": false
+}
