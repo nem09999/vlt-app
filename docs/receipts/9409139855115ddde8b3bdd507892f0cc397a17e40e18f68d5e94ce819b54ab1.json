@@ -1,0 +1,26 @@
+{
+  "schema": "vlt-source-receipt-v1",
+  "updated_at": "2026-11-27T19:03:01.474Z",
+  "previous_sha256": "0f4c02d95ef0eca954eea14c2439a070ff138218cde77c4948cbc11ae6133935",
+  "snapshot_sha256": "9409139855115ddde8b3bdd507892f0cc397a17e40e18f68d5e94ce819b54ab1",
+  "added": 1,
+  "evidence": [
+    {
+      "provider": "MINH_NGOC",
+      "url": "https://www.minhngoc.net.vn/ket-qua-xo-so/dien-toan-vietlott/mega-6x45.html",
+      "method": "GET",
+      "collected_at": "2026-11-27T19:03:01.411Z",
+      "sha256": "9a847ab3922b43a03b120221e5b5bd60baa38ed491ac2268b84ab732f85c372a",
+      "bytes": 267093
+    },
+    {
+      "provider": "MINH_NGOC",
+      "url": "https://www.minhngoc.net.vn/ket-qua-xo-so/dien-toan-vietlott/power-6x55.html",
+      "method": "GET",
+      "collected_at": "2026-11-27T19:03:01.460Z",
+      "sha256": "1cbbf5671a3619850eb0adb2c1536f6b4f2e4a905d656d68b95388aa707cbcfd",
+      "bytes": 303465
+    }
+  ],
+  "official_issuance": false
+}

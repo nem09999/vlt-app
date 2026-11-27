@@ -1,10 +1,10 @@
 {
   "schema": "vlt-manifest-v1",
-  "snapshot": "snapshots/0f4c02d95ef0eca954eea14c2439a070ff138218cde77c4948cbc11ae6133935.json",
-  "sha256": "0f4c02d95ef0eca954eea14c2439a070ff138218cde77c4948cbc11ae6133935",
-  "updated_at": "2026-11-26T16:02:50.962Z",
+  "snapshot": "snapshots/9409139855115ddde8b3bdd507892f0cc397a17e40e18f68d5e94ce819b54ab1.json",
+  "sha256": "9409139855115ddde8b3bdd507892f0cc397a17e40e18f68d5e94ce819b54ab1",
+  "updated_at": "2026-11-27T19:03:01.474Z",
   "cutoffs": {
-    "mega": "2026-11-25",
+    "mega": "2026-11-27",
     "power": "2026-11-26"
   }
 }
