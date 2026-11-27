@@ -1,14 +1,13 @@
 {
   "schema": "vlt-source-status-v1",
-  "checked_at": "2026-11-27T19:03:01.475Z",
-  "status": "UPDATED",
+  "checked_at": "2026-11-27T20:19:41.474Z",
+  "status": "SECONDARY_CHECKED_NO_CHANGE",
   "snapshot_sha256": "9409139855115ddde8b3bdd507892f0cc397a17e40e18f68d5e94ce819b54ab1",
-  "added": 1,
   "provider": "MINH_NGOC",
   "verification": "SECONDARY_SOURCE_PENDING_OFFICIAL",
   "official_unavailable": true,
   "overlap": {
-    "mega": 9,
+    "mega": 10,
     "power": 10
   }
 }
