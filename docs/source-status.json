@@ -9,5 +9,72 @@
   "overlap": {
     "mega": 10,
     "power": 10
+  },
+  "jackpots": {
+    "schema": "vlt-jackpots-v1",
+    "checked_at": "2026-11-28T04:37:41.229Z",
+    "games": {
+      "mega": {
+        "game": "mega",
+        "id": "01594",
+        "date": "2026-11-27",
+        "result": [
+          5,
+          23,
+          27,
+          35,
+          38,
+          45
+        ],
+        "awards": {
+          "Jackpot": {
+            "winners": 0,
+            "publishedAmount": 24014533000,
+            "totalAmount": null,
+            "perTicketAmount": null,
+            "valueBasis": "published_unspecified"
+          }
+        },
+        "verification": "OFFICIAL_HTTPS",
+        "source_url": "https://vietlott.vn/vi/trung-thuong/ket-qua-trung-thuong/645",
+        "checked_at": "2026-11-28T04:37:41.229Z",
+        "source_sha256": "8d378862f315fcdbe190218f07886e80f487e4d4127379557a9d2db5f3120208"
+      },
+      "power": {
+        "game": "power",
+        "id": "01429",
+        "date": "2026-11-26",
+        "result": [
+          14,
+          18,
+          24,
+          28,
+          34,
+          55,
+          32
+        ],
+        "awards": {
+          "Jackpot 1": {
+            "winners": 0,
+            "publishedAmount": 51820878000,
+            "totalAmount": null,
+            "perTicketAmount": null,
+            "valueBasis": "published_unspecified"
+          },
+          "Jackpot 2": {
+            "winners": 1,
+            "publishedAmount": 3992642500,
+            "totalAmount": null,
+            "perTicketAmount": null,
+            "valueBasis": "published_unspecified"
+          }
+        },
+        "verification": "OFFICIAL_HTTPS",
+        "source_url": "https://vietlott.vn/vi/trung-thuong/ket-qua-trung-thuong/655",
+        "checked_at": "2026-11-28T04:37:41.229Z",
+        "source_sha256": "ecbc69b98a8da4c41f695cf4a3f6cd9d54a01d2c628155258a451c0447701842"
+      }
+    },
+    "errors": {}
   }
 }

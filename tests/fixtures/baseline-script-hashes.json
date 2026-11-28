@@ -1,0 +1,18 @@
+{
+  "baseline_commit": "568103677f8a6b137fb0e9abf4ec76c66d36ed8d",
+  "inline_scripts": [
+    "571fe953d4ff28b2fe19b5f9adc194e79370ee7ce9d919fa8eb358284f31afd5",
+    "d9a7bf0742f8b2f72a5212b6395c989199c5ea39eddc1f03829c34c0727b7e80",
+    "cb448dbd673b07c79890354f7afcba174bca72db824246b6e1763eca67839ce5",
+    "28bf9db4fed3b0113f9d5d1fe9e83d9b47bdce2b88d3b4f73b93f9e76e06bb3e",
+    "157d4c38ded552b62a9fc03a7049951c1a2be0852356f6a05cf2009fcf307f02",
+    "0dd309c2bc0b0966c96d013fbcc41e18331bcf7db1157f022c1c834603ba98bb"
+  ],
+  "files": {
+    "lib/selection.cjs": "d9a7bf0742f8b2f72a5212b6395c989199c5ea39eddc1f03829c34c0727b7e80",
+    "lib/data.cjs": "cb448dbd673b07c79890354f7afcba174bca72db824246b6e1763eca67839ce5",
+    "scripts/pilot01_rules.py": "f45323285d6528e171b3835f6131b2db8edd85b7f4ad40aa0ae39b294c286b4b",
+    "scripts/lock-predictions.py": "42ceda100a62a178a35867c93d79a3dd0b1168be1f8f31bcd3a9ec9e077c84b5",
+    "scripts/evaluate-locks.cjs": "c25ebb6f937804f6db2c3324e69184ce3e71b216e39acaa2a9663a6c29534b3f"
+  }
+}
