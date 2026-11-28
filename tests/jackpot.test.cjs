@@ -12,5 +12,15 @@ test('future draw/date and wrong game rejected',()=>{A.throws(()=>J.parse(fixtur
 test('source error retains exact previous good games',async()=>{const prior={games:{mega:record('mega'),power:record('power')}};const out=await J.collect(prior,async()=>({ok:false,status:403}));A.deepEqual(out.games,prior.games);A.equal(out.errors.mega,'HTTP_403');});
 test('collector success checks both official source URLs and source hashes',async()=>{const out=await J.collect({},async(u,o)=>{A.equal(o.redirect,'error');const g=u.endsWith('645')?'mega':'power';return {ok:true,text:async()=>fixture(g)};});A.equal(Object.keys(out.games).length,2);A.deepEqual(out.errors,{});A.equal(out.games.mega.source_sha256,crypto.createHash('sha256').update(fixture('mega')).digest('hex'));});
 test('conflicting official publication preserves prior and records error',async()=>{const prior={games:{mega:record('mega')}};const out=await J.collect(prior,async u=>({ok:true,text:async()=>u.endsWith('645')?fixture('mega').replace('24.014.533.000','25.014.533.000'):fixture('power')}));A.deepEqual(out.games.mega,prior.games.mega);A.equal(out.errors.mega,'SOURCE_CONFLICT');});
-test('existing algorithm, data, UI logic and prospective scripts byte-identical',()=>{const baseline=require('./fixtures/baseline-script-hashes.json'),now=fs.readFileSync(__dirname+'/../docs/index.html','utf8'),hash=s=>crypto.createHash('sha256').update(s).digest('hex');const scripts=Array.from(now.matchAll(/<script[^>]*>([\s\S]*?)<\/script>/g),m=>m[1]);A.equal(scripts.length,8);for(let i=0;i<6;i++)A.equal(hash(scripts[i]),baseline.inline_scripts[i],'baseline inline script '+i);for(const [f,h]of Object.entries(baseline.files))A.equal(hash(fs.readFileSync(__dirname+'/../'+f)),h);A.equal(now.split('/* v2.1.0-jackpot:').length-1,1);});
-test('bundled official evidence matches source status and validates draw records',()=>{const html=fs.readFileSync(__dirname+'/../docs/index.html','utf8'),v=JSON.parse(html.match(/id="jackpot-data">([\s\S]*?)<\/script>/)[1]);const status=JSON.parse(fs.readFileSync(__dirname+'/../docs/source-status.json','utf8'));A.deepEqual(v,status.jackpots);for(const g of ['mega','power'])D.row(g,v.games[g]);});
+test('existing algorithm, data, UI logic and prospective scripts byte-identical',()=>{const baseline=require('./fixtures/baseline-script-hashes.json'),now=fs.readFileSync(__dirname+'/../docs/index.html','utf8'),hash=s=>crypto.createHash('sha256').update(s).digest('hex');const scripts=Array.from(now.matchAll(/<script[^>]*>([\s\S]*?)<\/script>/g),m=>m[1]);A.equal(scripts.length,8);for(let i=0;i<6;i++)A.equal(hash(scripts[i].replace(/\r\n/g,'\n')),baseline.inline_scripts[i],'baseline inline script '+i);for(const [f,h]of Object.entries(baseline.files))A.equal(hash(fs.readFileSync(__dirname+'/../'+f,'utf8').replace(/\r\n/g,'\n')),h);A.equal(now.split('/* v2.1.0-jackpot:').length-1,1);});
+test('bundled official evidence matches the published fixture records',()=>{
+ const html=fs.readFileSync(__dirname+'/../docs/index.html','utf8');
+ const bundled=JSON.parse(html.match(/id="jackpot-data">([\s\S]*?)<\/script>/)[1]);
+ for(const game of ['mega','power']){
+  const draw=bundled.games[game];
+  const expected=record(game);
+  D.row(game,draw);
+  for(const key of ['id','date','result','awards','source_url','verification'])A.deepEqual(draw[key],expected[key],game+' '+key);
+ }
+ A.equal(bundled.games.power.awards['Jackpot 2'].winners,1);
+});

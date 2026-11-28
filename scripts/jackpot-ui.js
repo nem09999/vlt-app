@@ -22,8 +22,18 @@
   for(const name of g==='mega'?['Jackpot']:['Jackpot 1','Jackpot 2']){
    const a=official?.awards?.[name],section=node('div',undefined,'jp-award');section.append(node('strong',name));
    const count=a?.winners;
-   section.append(node('p',count===0?'Không có bộ số/vé trúng · 0':Number.isSafeInteger(count)?'Có trúng · '+count+' bộ số/vé trúng':'Số bộ số/vé trúng: Chưa xác minh'));
-   section.append(node('p','Giá trị nguồn công bố: '+money(a?.publishedAmount)));
+   const metrics=node('div',undefined,'jp-metrics');
+   const winners=node('p',count===0?'Không có bộ số/vé trúng · 0':Number.isSafeInteger(count)?'Có trúng · '+count+' bộ số/vé trúng':'Số bộ số/vé trúng: Chưa xác minh');
+   if(Number.isSafeInteger(count)){
+    const countDisplay=node('b',String(count));
+    countDisplay.setAttribute('aria-hidden','true');
+    winners.append(countDisplay);
+   }
+   metrics.append(winners);
+   const published=node('p','Giá trị nguồn công bố: ');
+   published.append(node('b',money(a?.publishedAmount),'jp-amount'));
+   metrics.append(published);
+   section.append(metrics);
    if(a?.totalAmount!=null)section.append(node('p','Tổng quỹ Jackpot: '+money(a.totalAmount)));
    if(a?.perTicketAmount!=null)section.append(node('p','Giá trị mỗi bộ số/vé: '+money(a.perTicketAmount)));
    if(a&&a.totalAmount==null&&a.perTicketAmount==null)section.append(node('small','Nguồn chưa phân định tổng quỹ/giá trị mỗi vé; không tự chia thưởng.'));
