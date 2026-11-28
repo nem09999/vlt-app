@@ -1,6 +1,6 @@
 {
   "schema": "vlt-source-status-v1",
-  "checked_at": "2026-11-28T04:47:03.150Z",
+  "checked_at": "2026-11-28T10:34:44.443Z",
   "status": "SECONDARY_CHECKED_NO_CHANGE",
   "snapshot_sha256": "9409139855115ddde8b3bdd507892f0cc397a17e40e18f68d5e94ce819b54ab1",
   "provider": "MINH_NGOC",
@@ -12,7 +12,7 @@
   },
   "jackpots": {
     "schema": "vlt-jackpots-v1",
-    "checked_at": "2026-11-28T04:47:01.031Z",
+    "checked_at": "2026-11-28T10:34:41.767Z",
     "games": {
       "power": {
         "game": "power",
